@@ -1,1 +1,39 @@
+{
+  "users": {
+    "user_id_1": {
+      "email": "shani@gmail.com",
+      "tasks": {
+        "task_id_1": {
+          "task_name": "Meeting at 11AM",
+          "description": "Marketing Strategy: Discussing the development ......",
+          "time": "11:00 AM",
+          "date": "14-May-2023"
+        },
+        "task_id_2": {
+          "task_name": "Meeting with team",
+          "description": "Discuss project progress with the team",
+          "time": "12:00 PM",
+          "date": "5-May-2023"
+        }
+      }
+    },
+    "user_id_2": {
+      "email": "ayesha@gmail.com ",
+      "tasks": {
+        "task_id_1": {
+          "task_name": "Dental",
+          "description": "Need to meet with the dentist",
+          "time": "4:00 PM",
+          "date": "10-May-2023"
+        },
+        "task_id_2": {
+          "task_name": "Finish coding assignment",
+          "description": "Complete the coding assignment for the course",
+          "time": "11:00 PM",
+          "date": "12-May-2023"
+        }
+      }
+    }
+  }
+}
 
