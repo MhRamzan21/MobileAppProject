@@ -1,20 +1,7 @@
-import { StyleSheet, Text, View } from "react-native";
-import colors from "./colors"
-import Login from "../components/Screens/Login";
+import React from 'react';
+import { NavigationContainer } from '@react-navigation/native';
+import AppNavigator from './AppNavigator';
 
 export default function Page() {
-  return (
-    <View>
-      <Login />
-    </View>
-  );
+  return  <AppNavigator />;
 }
-
-
-const styles = StyleSheet.create({
-  text: {
-    color: colors.deepBlue,
-    fontSize: 20,
-    
-  }
-})

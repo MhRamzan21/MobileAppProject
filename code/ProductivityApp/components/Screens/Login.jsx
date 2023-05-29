@@ -1,8 +1,11 @@
 import React from "react";
 import { StyleSheet, Text, TextInput, View } from "react-native";
 import colors from "../../app/colors";
+import { useNavigation } from "expo-router";
+import { TouchableOpacity } from "react-native-gesture-handler";
 
 export default function Login() {
+  const navigation = useNavigation();
   return (
     <View style={styles.container}>
       <View style={styles.logo}>
@@ -15,15 +18,18 @@ export default function Login() {
         style={styles.password}
         secureTextEntry={true}
       />
-      <Text style={styles.forgot}>
-        Forgot Password?
-      </Text>
-      <View style={styles.LoginButton}>
+      <Text style={styles.forgot}>Forgot Password?</Text>
+      <TouchableOpacity style={styles.LoginButton}>
         <Text style={styles.buttonText}>Login</Text>
-      </View>
+      </TouchableOpacity>
       <View style={styles.footerView}>
         <Text style={styles.footerText}>
-          Don't have an account? <Text style={styles.footerLink}>Sign up</Text>
+          Don't have an account?{' '}
+          <Text
+            style={styles.footerLink}
+            onPress={() => navigation.navigate('Signup')}>
+            Sign up
+          </Text>
         </Text>
       </View>
     </View>
@@ -38,13 +44,13 @@ const styles = StyleSheet.create({
   },
   tm: {
     color: colors.beige,
-    transform: [{rotate: "90deg"}],
+    transform: [{ rotate: "90deg" }],
     fontSize: 48,
-    fontWeight: 'bold',
+    fontWeight: "bold",
   },
   container: {
     flex: 1,
-    height: '100%',
+    height: "100%",
     backgroundColor: colors.deepBlue,
     alignItems: "center",
     justifyContent: "center",
@@ -67,8 +73,8 @@ const styles = StyleSheet.create({
     color: colors.deepBlue,
   },
   password: {
-    alignItems: 'center',
-    justifyContent: 'center',
+    alignItems: "center",
+    justifyContent: "center",
     height: 53,
     width: 264,
     marginTop: 20,
@@ -79,7 +85,7 @@ const styles = StyleSheet.create({
   },
   forgot: {
     color: colors.beige,
-    fontWeight: 'bold',
+    fontWeight: "bold",
     paddingTop: 10,
     fontSize: 16,
   },
