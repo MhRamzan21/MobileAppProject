@@ -1,31 +1,104 @@
-import React from "react";
-import { StyleSheet, Text, TextInput, View } from "react-native";
+import React, { useState } from "react";
+import { Alert, StyleSheet, Text, TextInput, View } from "react-native";
 import colors from "../../app/colors";
 import { useNavigation } from "expo-router";
 import { TouchableOpacity } from "react-native-gesture-handler";
+import { authentication, db } from "./FirebaseConfig";
+import { doc, setDoc } from "firebase/firestore";
+import { createUserWithEmailAndPassword } from "firebase/auth";
 
 export default function Login() {
   const navigation = useNavigation();
+  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [errMessage, setErrMessage] = useState("");
+
+  const resetUser = () => {
+    setUsername("");
+    setEmail("");
+    setPassword("");
+    setConfirmPassword("");
+  };
+
+  const matchPassword = () => {
+    password === confirmPassword
+      ? handleSignup()
+      : setErrMessage("Passwords do no match");
+  };
+  const signupSuccess = () => {
+    console.log("User Registered Successfully");
+    navigation.navigate("Profile");
+  };
+  const AddUserToDB = async (user) => {
+    await setDoc(doc(db, "Users", user.uid), {
+      UserName: username,
+      Email: user.email,
+    });
+  };
+
+  const handleSignup = () => {
+    createUserWithEmailAndPassword(authentication, email, password)
+      .then((userCredential) => {
+        const user = userCredential.user;
+        AddUserToDB(user);
+        signupSuccess();
+        resetUser();
+      })
+      .catch((error) => {
+        if (error.code === "auth/email-already-in-use") {
+          setErrMessage("That email address is already in use!");
+        }
+        if (error.code === "auth/invalid-email") {
+          setErrMessage("That email address is invalid!");
+        }
+        if (error.code === "auth/weak-password") {
+          setErrMessage("Password should be at least 6 characters");
+        } else {
+          console.log(error);
+          setErrMessage("Something went wrong, try again.");
+        }
+      });
+  };
+
   return (
     <View style={styles.container}>
       <View style={styles.logo}>
         <Text style={styles.tm}>TM</Text>
         <Text style={styles.loginHeading}>TaskMate</Text>
       </View>
-      <TextInput placeholder="Username" style={styles.Input} />
-      <TextInput placeholder="Email Address" style={styles.Input} />
+      <TextInput
+        placeholder="Username"
+        style={styles.Input}
+        onChangeText={setUsername}
+        value={username}
+      />
+      <TextInput
+        placeholder="Email Address"
+        style={styles.Input}
+        onChangeText={setEmail}
+        value={email}
+      />
       <TextInput
         placeholder="Password"
         style={styles.Input}
+        onChangeText={setPassword}
+        value={password}
         secureTextEntry={true}
       />
+      {errMessage && <Text style={styles.ErrorMessage}>{errMessage}</Text>}
       <TextInput
         placeholder=" Confirm Password"
         style={styles.Input}
+        onChangeText={setConfirmPassword}
+        value={confirmPassword}
         secureTextEntry={true}
       />
       <TouchableOpacity style={styles.LoginButton}>
-        <Text style={styles.buttonText}>Sign Up</Text>
+        <Text style={styles.buttonText} onPress={handleSignup}>
+          Sign Up
+        </Text>
       </TouchableOpacity>
       <View style={styles.footerView}>
         <Text style={styles.footerText}>
@@ -56,6 +129,11 @@ const styles = StyleSheet.create({
     fontSize: 48,
     fontWeight: "bold",
     textAlign: "center",
+  },
+  ErrorMessage: {
+    color: 'red',
+    fontSize: 12,
+    marginTop: 5,
   },
   container: {
     flex: 1,
