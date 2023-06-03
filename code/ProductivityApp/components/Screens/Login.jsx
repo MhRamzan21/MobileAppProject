@@ -12,10 +12,10 @@ export default function Login() {
         <Text style={styles.tm}>TM</Text>
         <Text style={styles.loginHeading}>TaskMate</Text>
       </View>
-      <TextInput placeholder="Email or Username" style={styles.email} />
+      <TextInput placeholder="Email or Username" style={styles.Input} />
       <TextInput
         placeholder="Password"
-        style={styles.password}
+        style={styles.Input}
         secureTextEntry={true}
       />
       <Text style={styles.forgot}>Forgot Password?</Text>
@@ -40,13 +40,16 @@ const styles = StyleSheet.create({
   logo: {
     flexDirection: "row",
     alignItems: "center",
+    justifyContent:"center",
     letterSpacing: 0,
+    marginBottom: 60,
   },
   tm: {
     color: colors.beige,
     transform: [{ rotate: "90deg" }],
     fontSize: 48,
     fontWeight: "bold",
+    textAlign: "center",
   },
   container: {
     flex: 1,
@@ -61,23 +64,11 @@ const styles = StyleSheet.create({
     color: colors.lightCoral,
     fontWeight: "bold",
     textAlign: "center",
-    marginBottom: 20,
   },
-  email: {
+  Input: {
     height: 53,
     width: 264,
-    marginTop: 20,
-    padding: 10,
-    borderRadius: 7,
-    backgroundColor: colors.beige,
-    color: colors.deepBlue,
-  },
-  password: {
-    alignItems: "center",
-    justifyContent: "center",
-    height: 53,
-    width: 264,
-    marginTop: 20,
+    marginTop: 30,
     padding: 10,
     borderRadius: 7,
     backgroundColor: colors.beige,
@@ -94,7 +85,7 @@ const styles = StyleSheet.create({
     borderRadius: 7,
     height: 53,
     width: 121,
-    marginTop: 20,
+    marginTop: 30,
     alignItems: "center",
     justifyContent: "center",
   },
@@ -108,6 +99,7 @@ const styles = StyleSheet.create({
     marginTop: 20,
   },
   footerText: {
+    marginTop: 20,
     fontSize: 16,
     color: colors.beige,
   },
