@@ -102,6 +102,7 @@ const styles = StyleSheet.create({
   },
   addButton: {
     backgroundColor: colors.lightCoral,
+    
     borderRadius: 5,
     padding: 10,
     marginRight: 10,
