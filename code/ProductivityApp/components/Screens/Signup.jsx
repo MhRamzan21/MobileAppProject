@@ -3,9 +3,10 @@ import { Alert, StyleSheet, Text, TextInput, View } from "react-native";
 import colors from "../../app/colors";
 import { useNavigation } from "expo-router";
 import { TouchableOpacity } from "react-native-gesture-handler";
-import { authentication, db } from "./FirebaseConfig";
+import { authentication, db } from "../../firebase/FirebaseConfig";
 import { doc, setDoc } from "firebase/firestore";
 import { createUserWithEmailAndPassword } from "firebase/auth";
+import Button from "../Button";
 
 export default function Login() {
   const navigation = useNavigation();
@@ -29,7 +30,7 @@ export default function Login() {
   };
   const signupSuccess = () => {
     console.log("User Registered Successfully");
-    navigation.navigate("Profile");
+    navigation.navigate("dash");
   };
   const AddUserToDB = async (user) => {
     await setDoc(doc(db, "Users", user.uid), {
@@ -68,6 +69,7 @@ export default function Login() {
         <Text style={styles.tm}>TM</Text>
         <Text style={styles.loginHeading}>TaskMate</Text>
       </View>
+      <Text style={styles.h1}>Create Account</Text>
       <TextInput
         placeholder="Username"
         style={styles.Input}
@@ -95,11 +97,7 @@ export default function Login() {
         value={confirmPassword}
         secureTextEntry={true}
       />
-      <TouchableOpacity style={styles.LoginButton}>
-        <Text style={styles.buttonText} onPress={handleSignup}>
-          Sign Up
-        </Text>
-      </TouchableOpacity>
+      <Button text="Sign Up" action={handleSignup}/>
       <View style={styles.footerView}>
         <Text style={styles.footerText}>
           Already Register?{" "}
@@ -122,6 +120,11 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     letterSpacing: 0,
     marginBottom: 60,
+  },
+  h1: {
+    color: colors.beige,
+    fontWeight: "bold",
+    fontSize: 24,
   },
   tm: {
     color: colors.beige,
@@ -164,20 +167,7 @@ const styles = StyleSheet.create({
     paddingTop: 10,
     fontSize: 16,
   },
-  LoginButton: {
-    backgroundColor: colors.lightCoral,
-    borderRadius: 7,
-    height: 53,
-    width: 121,
-    marginTop: 30,
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  buttonText: {
-    color: colors.deepBlue,
-    fontSize: 24,
-    fontWeight: "bold",
-  },
+  
   footerView: {
     alignItems: "center",
     marginTop: 20,

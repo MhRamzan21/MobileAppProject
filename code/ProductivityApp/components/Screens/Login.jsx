@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from "react";
-import { Alert, StyleSheet, Text, TextInput, View } from "react-native";
+import { StyleSheet, Text, TextInput, View } from "react-native";
 import colors from "../../app/colors";
 import { useNavigation } from "expo-router";
 import { TouchableOpacity } from "react-native-gesture-handler";
-import { authentication } from "./FirebaseConfig";
+import Button from "../Button"
+import { authentication } from "../../firebase/FirebaseConfig";
 import { onAuthStateChanged, signInWithEmailAndPassword } from "firebase/auth";
 
 export default function Login() {
@@ -32,7 +33,7 @@ export default function Login() {
       .then((userCredential) => {
         const user = userCredential.user;
         console.log(user);
-        navigation.navigate("Profile");
+        navigation.navigate("dash" , {username: user.email});
         console.log("User logged in..");
         resetUser();
       })
@@ -74,12 +75,8 @@ export default function Login() {
         secureTextEntry={true}
       />
       {errMessage && <Text style={styles.ErrorMessage}>{errMessage}</Text>}
-      <Text style={styles.forgot}>Forgot Password?</Text>
-      <TouchableOpacity style={styles.LoginButton}>
-        <Text style={styles.buttonText} onPress={handleLogin}>
-          Login
-        </Text>
-      </TouchableOpacity>
+      <Text style={styles.forgot} onPress={() => navigation.navigate("ResetPass")}>Forgot Password?</Text>
+      <Button text="Login" action={handleLogin} />
       <View style={styles.footerView}>
         <Text style={styles.footerText}>
           Don't have an account?{" "}
@@ -144,20 +141,7 @@ const styles = StyleSheet.create({
     paddingTop: 10,
     fontSize: 16,
   },
-  LoginButton: {
-    backgroundColor: colors.lightCoral,
-    borderRadius: 7,
-    height: 53,
-    width: 121,
-    marginTop: 30,
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  buttonText: {
-    color: colors.deepBlue,
-    fontSize: 24,
-    fontWeight: "bold",
-  },
+  
   footerView: {
     alignItems: "center",
     marginTop: 20,
